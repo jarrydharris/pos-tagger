@@ -21,7 +21,3 @@ def client(app):
 def valid_json():
     return {"text": "Hello World!"}
 
-
-@pytest.fixture()
-def expected_schema():
-    return SCHEMA
