@@ -1,0 +1,7 @@
+[tool.pytest.ini_options]
+console_output_style = "count"
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning"
+]
+testpaths = ["backend/src/tests"]
