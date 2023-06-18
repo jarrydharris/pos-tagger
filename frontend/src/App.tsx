@@ -1,20 +1,78 @@
 import './App.css'
-import {Button, Paper, Switch, TextField} from "@mui/material";
-import {useState} from "react";
+import {Button, Paper, Switch, TextField, Tooltip} from "@mui/material";
+import {ReactElement, useState} from "react";
 
+const text_process_url = "http://127.0.0.1:5000/api/v1/process_text"
 
+interface Token {
+    word: string,
+    class: string,
+}
+
+const classes: Record<string, string> = {
+    ADJ: "adjective",
+    ADP: "adposition",
+    ADV: "adverb",
+    AUX: "auxiliary",
+    CCONJ: "coordinating conjunction",
+    DET: "determiner",
+    INTJ: "interjection",
+    NOUN: "noun",
+    NUM: "numeral",
+    PART: "particle",
+    PRON: "pronoun",
+    PROPN: "proper noun",
+    PUNCT: "punctuation",
+    SCONJ: "subordinating conjunction",
+    SYM: "symbol",
+    VERB: "verb",
+    X: "other",
+}
+
+function DisplayToken(token: Token, showPOS: boolean): ReactElement {
+
+    const properties = Object.entries(token)
+        .filter(([key]) => key !== 'word')
+        .map(([_, value]) => value).join(' ');
+
+    const className = showPOS ? properties : '';
+    return (
+        <Tooltip key={token.word} title={classes[className]}>
+            <span className={className}>{token.word}</span>
+        </Tooltip>
+    )
+}
 
 function App() {
     const [inputText, setInputText] = useState<string>('');
-    const [outputText, setOutputText] = useState<string>('');
+    const [outputText, setOutputText] = useState<Array<Token>>([]);
+    const [showPOS, setShowPOS] = useState<boolean>(false);
 
-    function processText(text: string) {
-        return text;
+    function handlePosChange (event: React.ChangeEvent<HTMLInputElement>) {
+        setShowPOS(event.target.checked);
+    };
+
+    function processText(text: string): Promise<Response> {
+        return fetch(text_process_url,
+            {
+                method: 'POST',
+                body: JSON.stringify({text: text}),
+                headers: {'Content-Type': 'application/json'}
+            }
+        );
     }
 
-    function handleButtonPress(inputText: string) {
-        const processedText = processText(inputText);
-        setOutputText(processedText);
+    async function handleButtonPress(inputText: string) {
+        await processText(inputText)
+            .then(response => response.json())
+            .then((data) => {
+                setOutputText([]);
+                const newOutputText: Array<Token> = [];
+                data.forEach((token: Token) => {
+                    newOutputText.push(token)
+                });
+                setOutputText(newOutputText);
+            });
     }
 
     return (
@@ -26,9 +84,13 @@ function App() {
                     sx={output_style}
                     role="output-display"
                 >
-                    {outputText}
+                    {outputText.map((token: Token) => DisplayToken(token, showPOS))}
                 </Paper>
-                <Switch role="pos-toggle"/>Toggle parts of speech
+                <Switch
+                    role="pos-toggle"
+                    checked={showPOS}
+                    onChange={handlePosChange}
+                />Toggle parts of speech
             </div>
             <div id="input-container">
                 <TextField

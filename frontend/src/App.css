@@ -5,28 +5,6 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
@@ -37,6 +15,88 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
+/* Linguistic classes */
+
+
+span {
+    border-radius: 4px;
+    margin: 0.05em 0.05em;
+    font-weight: bold;
+}
+
+span.ADJ {
+    background-color: #90be6d;
+
+}
+
+span.ADP {
+    background-color: #cc3399;
+}
+
+span.ADV {
+    background-color: #006699;
+}
+
+span.AUX {
+    background-color: #ff7b00;
+}
+
+span.CCONJ {
+    background-color: #875702;
+}
+
+span.DET {
+    background-color: #9b2226;
+}
+
+span.INTJ {
+    border: 1px solid #646cff;
+    background-color: #646cff;
+}
+
+span.NOUN {
+    background-color: #f94144;
+}
+
+span.NUM {
+    background-color: #f3722c;
+}
+
+span.PART {
+    background-color: #f8961e;
+}
+
+span.PRON {
+    background-color: #f9844a;
+}
+
+span.PROPN {
+    background-color: #f9c74f;
+}
+
+span.PUNCT {
+}
+
+span.SCONJ {
+    background-color: #43aa8b;
+}
+
+span.SYM {
+    background-color: #43aa8b;
+}
+
+span.VERB {
+    background-color: #4d908e;
+}
+
+span.X {
+    background-color: #577590;
+}
+
+#output-container {
+    gap: 0.5em;
+}
+
+#input-container {
+    gap: 0.5em;
 }
