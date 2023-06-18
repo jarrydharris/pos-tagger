@@ -110,7 +110,10 @@ function App() {
                     sx={buttonStyle}
                     onClick={() => handleButtonPress(inputText)}
                     variant="outlined"
-                >Process text</Button>
+                    role="button"
+                >
+                    Process text
+                </Button>
             </div>
         </>
     )
